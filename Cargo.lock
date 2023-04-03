@@ -1653,6 +1653,7 @@ dependencies = [
  "dioxus-web",
  "dotenv",
  "reqwest",
+ "serde",
 ]
 
 [[package]]
