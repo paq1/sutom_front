@@ -1,7 +1,6 @@
 use std::env;
 use std::fs::File;
 use std::sync::Arc;
-// use config::{Config, ConfigBuilder, Environment, FileFormat};
 use dioxus::html::{input, style};
 use dioxus::prelude::*;
 use log::{LevelFilter, info, error};
