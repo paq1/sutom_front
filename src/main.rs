@@ -1,22 +1,18 @@
+use std::env;
+use std::fs::File;
+use std::sync::Arc;
+// use config::{Config, ConfigBuilder, Environment, FileFormat};
 use dioxus::html::{input, style};
 use dioxus::prelude::*;
-use serde::{
-    Serialize, Deserialize
-};
-use log::{LevelFilter, info};
+use log::{LevelFilter, info, error};
+use crate::app::services::sutom_service_api_impl::SutomServiceApiImpl;
+use crate::core::services::sutom_service_api::SutomServiceApi;
+use crate::models::commands::create_player_command::CreatePlayer;
+use crate::app::components::hello_world_components::hello_world_component;
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct CreatePlayer {
-    pub name: String,
-}
-
-impl CreatePlayer {
-    pub fn new(name: String) -> Self {
-        Self {
-            name
-        }
-    }
-}
+mod app;
+mod core;
+mod models;
 
 fn main() {
     // launch the web app
@@ -24,60 +20,41 @@ fn main() {
     dioxus_web::launch(app);
 }
 
-async fn test_async() {
-    info!("hello");
-    let response = reqwest::Client::new()
-        .post("https://example.com/login")
-        .fetch_mode_no_cors()
-        .json(&CreatePlayer::new("mon giga test".to_string()))
-        .send()
-        .await;
-}
-
-// create a component that renders a div with the text "Hello, world!"
 fn app(cx: Scope) -> Element {
 
     let name_player: &UseState<String> = use_state(cx, || "bob".to_string());
     let partie: &UseState<String> = use_state(cx, || "".to_string());
-    let url = "http://localhost:8000";
+    let sutom_service_api = SutomServiceApiImpl {
+        url: "http://localhost:8000".to_string()
+    };
 
     let create_player = move |_| {
-
-        // let val_player = name_player.get().clone();
-
+        let name_player_content = name_player.get().clone();
+        // todo voir comment injecter des service avec dioxus
+        let service = sutom_service_api.clone();
         cx.spawn({
             async move {
-
-                test_async().await;
-                // let response = reqwest::Client::new()
-                //     .post("http://localhost:8000/players/commands/create")
-                //     .fetch_mode_no_cors()
-                //     .json(&CreatePlayer::new("toto".to_string()))
-                //     .send()
-                //     .await;
-
-                // match response {
-                //     Ok(data) => {
-                //         println!("created!");
-                //         // logged_in.set(true);
-                //     }
-                //     Err(err) => {
-                //         println!(
-                //             "not created"
-                //         )
-                //     }
-                // }
+                info!("hello");
+                service
+                    .create(&name_player_content)
+                    .await
+                    .map(|_| info!("called"))
+                    .map_err(|err| {
+                        err
+                    })
+                    .expect("communication au service impossible");
             }
         });
     };
 
     cx.render(rsx! {
         style { include_str!("../src/style.css") }
+        hello_world_component {}
         h1 {
             "SUTOM compétiton"
         }
         h2 {
-            "colle ton resultat de sutom"
+            "Colle ton resultat de sutom"
         }
         input {
             value: "{name_player}",
@@ -86,20 +63,14 @@ fn app(cx: Scope) -> Element {
         }
         p {
             "partie : "
-        }
-        input {
-            value: "{partie}",
-            // and what to do when the value changes
-            oninput: move |evt| partie.set(evt.value.clone()),
+            input {
+                value: "{partie}",
+                // and what to do when the value changes
+                oninput: move |evt| partie.set(evt.value.clone()),
+            }
         }
         p {
-            "voici votre input"
-        }
-        br {}
-        p {"{name_player}"}
-        div {
-            class: "helloWorld",
-            "Hello, world!!!!"
+            "voici votre input : {name_player}"
         }
         button {
             onclick: create_player,
