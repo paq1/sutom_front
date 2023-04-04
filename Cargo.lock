@@ -420,6 +420,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "dioxus-logger"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "775eeb7e650cf7de44646c211ab59338da7a91a489fc83b6f56357cb2f2b2a47"
+dependencies = [
+ "log",
+ "web-sys",
+]
+
+[[package]]
 name = "dioxus-rsx"
 version = "0.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1650,8 +1660,10 @@ name = "sutom_front"
 version = "0.1.0"
 dependencies = [
  "dioxus",
+ "dioxus-logger",
  "dioxus-web",
  "dotenv",
+ "log",
  "reqwest",
  "serde",
 ]
