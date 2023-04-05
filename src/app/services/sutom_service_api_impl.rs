@@ -1,11 +1,8 @@
-use crate::core::services::sutom_service_api::SutomServiceApi;
 use crate::models::commands::create_player_command::CreatePlayer;
-
-use async_trait::async_trait;
 
 #[derive(Clone)]
 pub struct SutomServiceApiImpl {
-    pub url: String
+    pub url: &'static str
 }
 
 impl SutomServiceApiImpl {

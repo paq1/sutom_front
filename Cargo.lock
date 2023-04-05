@@ -1853,6 +1853,7 @@ dependencies = [
  "dioxus-logger",
  "dioxus-web",
  "log",
+ "once_cell",
  "reqwest",
  "serde",
 ]

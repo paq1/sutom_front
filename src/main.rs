@@ -1,13 +1,10 @@
-use std::env;
-use std::fs::File;
-use std::sync::Arc;
-use dioxus::html::{input, style};
+use std::string::ToString;
+
 use dioxus::prelude::*;
-use log::{LevelFilter, info, error};
-use crate::app::services::sutom_service_api_impl::SutomServiceApiImpl;
-use crate::core::services::sutom_service_api::SutomServiceApi;
-use crate::models::commands::create_player_command::CreatePlayer;
+use log::{info, LevelFilter};
+
 use crate::app::components::hello_world_components::hello_world_component;
+use crate::app::services::sutom_service_api_impl::SutomServiceApiImpl;
 
 mod app;
 mod core;
@@ -21,20 +18,20 @@ fn main() {
 
 fn app(cx: Scope) -> Element {
 
+    let sutom_service_api = &SutomServiceApiImpl {
+        url: "http://localhost:8000"
+    };
+
     let name_player: &UseState<String> = use_state(cx, || "bob".to_string());
     let partie: &UseState<String> = use_state(cx, || "".to_string());
-    let sutom_service_api = SutomServiceApiImpl {
-        url: "http://localhost:8000".to_string()
-    };
 
     let create_player = move |_| {
         let name_player_content = name_player.get().clone();
         // todo voir comment injecter des service avec dioxus
-        let service = sutom_service_api.clone();
         cx.spawn({
             async move {
                 info!("hello");
-                service
+                sutom_service_api
                     .create(&name_player_content)
                     .await
                     .map(|_| info!("called"))
