@@ -8,7 +8,6 @@ pub struct SutomServiceApiImpl<'a> {
 
 impl SutomServiceApiImpl<'_> {
     pub async fn create(&self, name: &String) -> Result<(), String> {
-        // Ok(())
         // fixme Uncaught (in promise) Error: url parse
         reqwest::Client::new()
             .post(format!("{}/players/commands/create", self.url))
