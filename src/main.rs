@@ -27,7 +27,6 @@ fn app(cx: Scope) -> Element {
 
     let create_player = move |_| {
         let name_player_content = name_player.get().clone();
-        // todo voir comment injecter des service avec dioxus
         cx.spawn({
             async move {
                 info!("hello");

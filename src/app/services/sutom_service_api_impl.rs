@@ -1,11 +1,12 @@
+use dioxus::prelude::Props;
 use crate::models::commands::create_player_command::CreatePlayer;
 
-#[derive(Clone)]
-pub struct SutomServiceApiImpl {
-    pub url: &'static str
+#[derive(Clone, Props, PartialEq)]
+pub struct SutomServiceApiImpl<'a> {
+    pub url: &'a str
 }
 
-impl SutomServiceApiImpl {
+impl SutomServiceApiImpl<'_> {
     pub async fn create(&self, name: &String) -> Result<(), String> {
         // Ok(())
         // fixme Uncaught (in promise) Error: url parse
