@@ -11,7 +11,6 @@ impl SutomServiceApiImpl<'_> {
         // fixme Uncaught (in promise) Error: url parse
         reqwest::Client::new()
             .post(format!("{}/players/commands/create", self.url))
-            .fetch_mode_no_cors()
             .json(&CreatePlayer::new(name.clone()))
             .send()
             .await

@@ -1,7 +1,9 @@
+use std::fs;
 use std::string::ToString;
 
 use dioxus::prelude::*;
 use log::{info, LevelFilter};
+use toml::Value;
 
 use crate::app::components::hello_world_components::hello_world_component;
 use crate::app::services::sutom_service_api_impl::SutomServiceApiImpl;
@@ -18,9 +20,16 @@ fn main() {
 
 fn app(cx: Scope) -> Element {
 
-    let sutom_service_api = &SutomServiceApiImpl {
-        url: "http://localhost:8000"
-    };
+    let contents = include_str!("../config.toml");
+    let config: Value = toml::from_str(contents).expect("Could not parse TOML");
+
+    let url = config["api"]["host"].as_str().expect("url chargement impossible");
+
+    let url_string = url.to_string();
+
+    // let sutom_service_api = SutomServiceApiImpl {
+    //     url: url_string.as_str()
+    // };
 
     let name_player: &UseState<String> = use_state(cx, || "bob".to_string());
     let partie: &UseState<String> = use_state(cx, || "".to_string());
