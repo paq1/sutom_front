@@ -4,7 +4,7 @@ use dioxus::prelude::*;
 use log::{info, LevelFilter};
 
 use crate::app::components::hello_world_components::hello_world_component;
-use crate::app::services::sutom_service_api_impl::SutomServiceApiImpl;
+use crate::app::services::sutom_service_api_impl::create_player;
 
 mod app;
 mod core;
@@ -18,10 +18,6 @@ fn main() {
 
 fn app(cx: Scope) -> Element {
 
-    let sutom_service_api = &SutomServiceApiImpl {
-        url: "http://localhost:8000"
-    };
-
     let name_player: &UseState<String> = use_state(cx, || "bob".to_string());
     let partie: &UseState<String> = use_state(cx, || "".to_string());
 
@@ -29,9 +25,7 @@ fn app(cx: Scope) -> Element {
         let name_player_content = name_player.get().clone();
         cx.spawn({
             async move {
-                info!("hello");
-                sutom_service_api
-                    .create(&name_player_content)
+                create_player(&name_player_content)
                     .await
                     .map(|_| info!("called"))
                     .map_err(|err| {

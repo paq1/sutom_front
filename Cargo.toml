@@ -9,9 +9,14 @@ edition = "2021"
 dioxus = "0.3.2"
 dioxus-logger = "0.3.0"
 dioxus-web = "0.3.1"
-config = "0.13.3"
+dotenv = "0.15.0"
 log = "0.4.17"
 reqwest = { version = "0.11.16", features = ["json"] }
 serde = "1.0.159"
 async-trait = "0.1.68"
 once_cell = "1.17.1"
+toml = "0.7.3"
+
+[[example]] # todo mettre dans bin lorsque ce sera fix cote dioxus
+name = "setup_env"
+path = "script/setup_env.rs"
