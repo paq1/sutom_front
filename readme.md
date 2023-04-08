@@ -7,7 +7,15 @@ Il faut lancer le projet sutom api en local
 </p>
 <a href="https://github.com/paq1/sutom-api/tree/ajout-cors-all">Sutom api</a>
 <p>
-Runner la branche "ajout-cors-all" en local sur un autre terminal
+A la racine du projet, ajoutez un fichier .env et mettez y l'uri de votre mongodb local,
+par exemple: 
+</p>
+
+```text
+MONGO_URI=mongodb://localhost:27017
+```
+<p>
+Enfin lancer l'api sutom api
 </p>
 
 ```shell
