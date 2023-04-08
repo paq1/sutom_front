@@ -1,9 +1,7 @@
-use std::fs;
 use std::string::ToString;
 
 use dioxus::prelude::*;
 use log::{info, LevelFilter};
-use toml::Value;
 
 use crate::app::components::hello_world_components::hello_world_component;
 use crate::app::services::sutom_service_api_impl::create_player;
