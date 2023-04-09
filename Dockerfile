@@ -4,6 +4,5 @@ WORKDIR /
 RUN cargo install dioxus-cli
 RUN rustup target add wasm32-unknown-unknown
 RUN cargo build --release
-RUN cargo run --example setup_env
 EXPOSE 8080
-CMD ["dioxus serve"]
+CMD ["bash","-c","cargo run --example setup_env && dioxus serve"]
