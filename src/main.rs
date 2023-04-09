@@ -5,7 +5,7 @@ use log::{LevelFilter};
 
 use crate::app::components::hello_world_components::hello_world_component;
 use crate::app::services::party_handler_impl::PartyHandlerImpl;
-use crate::app::services::sutom_service_api_impl::{get_url, add_party};
+use crate::app::services::sutom_service_api_impl::{get_url, create_player_and_add_party_or_just_add_party};
 use crate::core::services::party_handler::PartyHandler;
 
 mod app;
@@ -30,7 +30,7 @@ fn app(cx: Scope) -> Element {
         let party = PartyHandlerImpl::handle_message(&partie_content).expect("error parsing");
         cx.spawn({
             async move {
-                add_party(&url, &party, &name_player_content)
+                create_player_and_add_party_or_just_add_party(&url, &party, &name_player_content)
                     .await
                     .expect("erreur lors de l'ajout de partie");
             }

@@ -5,7 +5,9 @@ use futures::TryFutureExt;
 use log::info;
 use crate::core::entities::party::Party;
 
-pub async fn add_party(url: &String, party: &Party, name_player_content: &String) -> Result<String, String> {
+pub async fn create_player_and_add_party_or_just_add_party(
+    url: &String, party: &Party, name_player_content: &String
+) -> Result<String, String> {
     player_exist(&url, &name_player_content)
         .and_then(|exist| switch_existing_player(exist, &url, &party, &name_player_content))
         .await
