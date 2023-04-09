@@ -37,9 +37,11 @@ async fn switch_existing_player(exist: bool, url: &String, party: &Party, name_p
                 add_party_without_check(url, party, name_player_content)
                     .and_then(|res| async move {
                         if res >= 400 {
-                            Ok(String::from("vous avez déjà joué aujourd'hui"))
+                            Err(String::from("vous avez déjà joué aujourd'hui 😋"))
                         } else {
-                            Ok(String::from("la partie a bien ete ajoutée 😘"))
+                            let compte_creer_ok = "votre compte a bien été créé 🤖";
+                            let ajout_patie_ok = "la partie a bien été ajoutée 😘";
+                            Ok(format!("{compte_creer_ok}\n{ajout_patie_ok}"))
                         }
                     })
                     .await
