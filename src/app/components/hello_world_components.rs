@@ -1,10 +1,10 @@
 use dioxus::prelude::*;
 
-pub fn hello_world_component(cx: Scope) -> Element {
+pub fn bandeau_smiley_component(cx: Scope) -> Element {
     cx.render(rsx!(
         div {
-            class: "helloWorld",
-            "Hello, world!!!!"
+            class: "smiley",
+            "😀😁😂🤣😃😄😅😆😉😊😋😎😍😘🥰😗😙😚☺🙂🤗🤩🤔😌😛😜😝🤤😒😓😔😕🙃🤑😲☹🙁😖😞😟😤"
         }
     ))
 }
