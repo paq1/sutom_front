@@ -13,7 +13,7 @@ pub async fn create_player_and_add_party_or_just_add_party(
         .await
 }
 
-pub fn get_url() -> String {
+pub fn get_url_from_config() -> String {
     let contents = include_str!("../../../config.toml");
     let config: Value = toml::from_str(contents).expect("Could not parse TOML");
     let url = config["api"]["SUTOM_API_KEY"].as_str().expect("url chargement impossible");
