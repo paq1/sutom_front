@@ -1,11 +1,11 @@
 use std::string::ToString;
 
 use dioxus::prelude::*;
-use log::{info, LevelFilter};
+use log::{LevelFilter};
 
 use crate::app::components::hello_world_components::hello_world_component;
 use crate::app::services::party_handler_impl::PartyHandlerImpl;
-use crate::app::services::sutom_service_api_impl::create_player;
+use crate::app::services::sutom_service_api_impl::{get_url_from_config, create_player_and_add_party_or_just_add_party};
 use crate::core::services::party_handler::PartyHandler;
 
 mod app;
@@ -26,21 +26,13 @@ fn app(cx: Scope) -> Element {
     let add_party_player = move |_| {
         let name_player_content = name_player.get().clone();
         let partie_content = partie_state.get().clone();
-
+        let url = get_url_from_config();
+        let party = PartyHandlerImpl::handle_message(&partie_content).expect("error parsing");
         cx.spawn({
             async move {
-
-                let party = PartyHandlerImpl::handle_message(&partie_content).expect("error parsing");
-
-                info!("{}", partie_content);
-
-                create_player(&name_player_content)
+                create_player_and_add_party_or_just_add_party(&url, &party, &name_player_content)
                     .await
-                    .map(|_| info!("called"))
-                    .map_err(|err| {
-                        err
-                    })
-                    .expect("communication au service impossible");
+                    .expect("erreur lors de l'ajout de partie");
             }
         });
     };
