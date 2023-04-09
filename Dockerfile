@@ -6,4 +6,4 @@ RUN rustup target add wasm32-unknown-unknown
 RUN cargo build --release
 RUN cargo run --example setup_env
 EXPOSE 8080
-CMD ["./target/release/sutom-api"]
+CMD ["dioxus serve"]
