@@ -1,11 +1,11 @@
 use std::string::ToString;
 
 use dioxus::prelude::*;
-use log::{LevelFilter};
+use log::LevelFilter;
 
-use crate::app::components::hello_world_components::hello_world_component;
+use crate::app::components::hello_world_components::bandeau_smiley_component;
 use crate::app::services::party_handler_impl::PartyHandlerImpl;
-use crate::app::services::sutom_service_api_impl::{get_url_from_config, create_player_and_add_party_or_just_add_party};
+use crate::app::services::sutom_service_api_impl::{create_player_and_add_party_or_just_add_party, get_url_from_config};
 use crate::core::services::party_handler::PartyHandler;
 
 mod app;
@@ -20,7 +20,7 @@ fn main() {
 
 fn app(cx: Scope) -> Element {
 
-    let name_player: &UseState<String> = use_state(cx, || "bob".to_string());
+    let name_player: &UseState<String> = use_state(cx, || "martineLimonier".to_string());
     let partie_state: &UseState<String> = use_state(cx, || "".to_string());
 
     let add_party_player = move |_| {
@@ -39,32 +39,33 @@ fn app(cx: Scope) -> Element {
 
     cx.render(rsx! {
         style { include_str!("../src/style.css") }
-        hello_world_component {}
-        h1 {
-            "SUTOM compétiton"
-        }
-        h2 {
-            "Colle ton resultat de sutom"
-        }
-        input {
-            value: "{name_player}",
-            // and what to do when the value changes
-            oninput: move |evt| name_player.set(evt.value.clone()),
-        }
-        p {
-            "partie : "
+        bandeau_smiley_component {}
+
+        div {
+            class: "content",
+            div {
+                h1 {
+                    class: "sutomTitle",
+                    "SUTOM-COMPETITION"
+                }
+            }
+            input {
+                value: "{name_player}",
+                oninput: move |evt| name_player.set(evt.value.clone()),
+            }
+
             textarea {
                 value: "{partie_state}",
-                // and what to do when the value changes
                 oninput: move |evt| partie_state.set(evt.value.clone()),
             }
-        }
-        p {
-            "voici votre input : {name_player}"
-        }
-        button {
-            onclick: add_party_player,
-            "submit",
+
+            // p {
+            //     "voici votre input : {name_player}"
+            // }
+            button {
+                onclick: add_party_player,
+                "submit",
+            }
         }
     })
 }
