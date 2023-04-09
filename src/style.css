@@ -16,14 +16,25 @@ input {
     border-bottom: 2px solid #0077c7;
     background: rgb(43,43,43);
     color: white;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+input:hover {
+    border-bottom: 2px solid red;
 }
 
 textarea {
     width: 300px;
     height: 300px;
     background: #0077c7;
-    /*text-align: center;*/
 }
+
+textarea:hover {
+    border: 2px solid #ffbd00;
+}
+
 
 button {
     background: #0077c7;
@@ -35,6 +46,10 @@ button {
     padding: 15px 32px;
     margin-top: 16px;
 }
+button:hover {
+    background: #ffbd00;
+}
+
 
 .content {
     display: flex;

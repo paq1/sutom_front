@@ -20,7 +20,7 @@ fn main() {
 
 fn app(cx: Scope) -> Element {
 
-    let name_player: &UseState<String> = use_state(cx, || "bob".to_string());
+    let name_player: &UseState<String> = use_state(cx, || "martineLimonier".to_string());
     let partie_state: &UseState<String> = use_state(cx, || "".to_string());
 
     let add_party_player = move |_| {
@@ -49,12 +49,9 @@ fn app(cx: Scope) -> Element {
                     "SUTOM-COMPETITION"
                 }
             }
-            p {
-                "nom du joueur : "
-                input {
-                    value: "{name_player}",
-                    oninput: move |evt| name_player.set(evt.value.clone()),
-                }
+            input {
+                value: "{name_player}",
+                oninput: move |evt| name_player.set(evt.value.clone()),
             }
 
             textarea {
