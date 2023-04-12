@@ -2,11 +2,11 @@ use std::string::ToString;
 
 use dioxus::prelude::*;
 use log::LevelFilter;
+use sutom_rules::core::message_handler::handle_message;
 
 use crate::app::components::hello_world_components::bandeau_smiley_component;
-use crate::app::services::party_handler_impl::PartyHandlerImpl;
 use crate::app::services::sutom_service_api_impl::{create_player_and_add_party_or_just_add_party, get_url_from_config};
-use crate::core::services::party_handler::PartyHandler;
+use crate::core::entities::party::Party;
 
 mod app;
 mod core;
@@ -27,7 +27,11 @@ fn app(cx: Scope) -> Element {
         let name_player_content = name_player.get().clone();
         let partie_content = partie_state.get().clone();
         let url = get_url_from_config();
-        let party = PartyHandlerImpl::handle_message(&partie_content).expect("error parsing");
+        let party = handle_message(&partie_content)
+            .map(|party| {
+                Party::new(party.taille_du_mot, party.nombre_essaies_total, party.nombre_essaies)
+            })
+            .expect("error parsing");
         cx.spawn({
             async move {
                 create_player_and_add_party_or_just_add_party(&url, &party, &name_player_content)

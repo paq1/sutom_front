@@ -17,6 +17,7 @@ async-trait = "0.1.68"
 once_cell = "1.17.1"
 toml = "0.7.3"
 futures = "0.3.28"
+sutom-rules = "1.0.1"
 
 [[example]] # todo mettre dans bin lorsque ce sera fix cote dioxus
 name = "setup_env"
